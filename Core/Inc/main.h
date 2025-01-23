@@ -38,6 +38,8 @@ OF SUCH DAMAGE.
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "SEGGER_RTT.h"
+
 void init_GPIO();
 
 void init_UART();

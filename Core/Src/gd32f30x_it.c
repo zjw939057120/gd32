@@ -141,3 +141,12 @@ void SysTick_Handler(void)
 {
     delay_decrement();
 }
+
+void USART1_IRQHandler(void)
+{
+    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_RBNE)){
+        /* receive data */
+        uint16_t ch = usart_data_receive(USART1);
+        SEGGER_RTT_printf(0, "USART1_IRQHandler %c\r\n",ch);
+    }
+}

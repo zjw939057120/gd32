@@ -39,7 +39,6 @@ OF SUCH DAMAGE.
 #include "systick.h"
 #include <stdio.h>
 #include "main.h"
-#include "SEGGER_RTT.h"
 
 /*!
     \brief      main function
@@ -77,8 +76,13 @@ int fputc(int ch, FILE *f)
 
 void init_GPIO()
 {
+    rcu_periph_clock_enable(RCU_GPIOA);
     rcu_periph_clock_enable(RCU_GPIOC);
+
+    gpio_init(GPIOA, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_8);
     gpio_init(GPIOC, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_9);
+
+    gpio_bit_set(GPIOA, GPIO_PIN_8);
     gpio_bit_set(GPIOC, GPIO_PIN_9);
 }
 
@@ -102,4 +106,8 @@ void init_UART()
     usart_receive_config(USART1, USART_RECEIVE_ENABLE);
     usart_transmit_config(USART1, USART_TRANSMIT_ENABLE);
     usart_enable(USART1);
+    
+    // 使能 USART0 接收中断
+    nvic_irq_enable(USART1_IRQn, 0, 0);   // 配置中断优先级
+    usart_interrupt_enable(USART1, USART_INT_RBNE);  // 使能接收中断
 }
