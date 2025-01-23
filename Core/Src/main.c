@@ -81,9 +81,14 @@ void init_GPIO()
 
     gpio_init(GPIOA, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_8);
     gpio_init(GPIOC, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_9);
+    gpio_init(GPIOC, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_8);
 
+    //CAM_POWEN
     gpio_bit_set(GPIOA, GPIO_PIN_8);
+    //RK3568_PWR_EN
     gpio_bit_set(GPIOC, GPIO_PIN_9);
+    //GNSS_PWR_EN_H
+    gpio_bit_reset(GPIOC, GPIO_PIN_8);
 }
 
 void init_UART()
